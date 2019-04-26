@@ -68,7 +68,7 @@ preambleBlock = query(visaObj,':WAVEFORM:PREAMBLE?');
 fprintf(visaObj,':WAV:DATA?');
 % read back the BINBLOCK with the data in specified format and store it in
 % the waveform structure. FREAD removes the extra terminator in the buffer
-waveform.RawData = binblockread(visaObj,'uint16'); fread(visaObj,1);
+waveform.RawData = binblockread(visaObj,'uint32'); fread(visaObj,1);%binblockread uint16
 % Read back the error queue on the instrument
 instrumentError = query(visaObj,':SYSTEM:ERR?');
 while ~isequal(instrumentError,['+0,"No error"' char(10)])
@@ -122,7 +122,7 @@ fid = fopen('test1.bmp','w');
 fwrite(fid,screenBMP,'uint8');
 fclose(fid);
 % Read the BMP and display image
-figure; colormap(gray(256)); 
+figure; colormap(color(256)); 
 imageMatrix = imread('test1.bmp','bmp');
 image(imageMatrix); 
 % Adjust the figure so it shows accurately
